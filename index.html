@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movement Captcha</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Movement Captcha</h1>
+      <blockquote class="attribution">
+        An experiment by <a href="https://benjamin.piouffle.com/" target="_blank">Benjamin Piouffle</a>, published on <a href="https://github.com/Betree/movement-captcha" target="_blank">https://github.com/Betree/movement-captcha</a>
+      </blockquote>
+    </header>
+
+    <main>
+      <aside id="params" class="params-panel">
+        <h2>Parameters</h2>
+
+        <section class="param-section">
+          <h3>General</h3>
+          <div class="param-group">
+            <label for="param-preset"
+              >Preset
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-preset"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-preset" popover="hint" class="param-tooltip">
+              Pre-configured parameter sets.
+            </div>
+            <select id="param-preset">
+              <option value="">Custom</option>
+            </select>
+          </div>
+          <div class="param-group">
+            <label for="param-length"
+              >Captcha length
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-length"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-length" popover="hint" class="param-tooltip">
+              Number of characters to identify (4–8).
+            </div>
+            <div class="param-slider-row">
+              <input type="range" id="param-length" min="4" max="8" value="5" />
+              <span id="param-length-value" class="param-slider-value">5</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="param-section">
+          <h3>Solution</h3>
+          <div class="param-group">
+            <label for="param-speed"
+              >Solution speed
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-speed"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-speed" popover="hint" class="param-tooltip">
+              Animation cycle duration for solution characters (higher =
+              faster).
+            </div>
+            <div class="param-slider-row">
+              <input type="range" id="param-speed" min="1" max="10" value="5" />
+              <span id="param-speed-value" class="param-slider-value">5</span>
+            </div>
+          </div>
+          <div class="param-group">
+            <label for="param-solution-shape"
+              >Solution shape
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-solution-shape"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-solution-shape" popover="hint" class="param-tooltip">
+              Path solution chars follow (same types as noise: circle, square,
+              triangle, z, 8, ∞, vibrate, matrix, teleportation). Differentiate by movement only.
+            </div>
+            <select id="param-solution-shape">
+              <option value="random">Random</option>
+              <option value="square">Square</option>
+              <option value="circle" selected>Circle</option>
+              <option value="triangle">Triangle</option>
+              <option value="z">Z</option>
+              <option value="8">8</option>
+              <option value="infinity">∞</option>
+              <option value="vibrate">Vibrate</option>
+              <option value="matrix">Matrix</option>
+              <option value="teleportation">Teleportation</option>
+            </select>
+          </div>
+          <div class="param-group">
+            <label for="param-shape-radius"
+              >Shape radius
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-shape-radius"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-shape-radius" popover="hint" class="param-tooltip">
+              Size of movement paths (circle, square, triangle, z). Higher =
+              larger orbits.
+            </div>
+            <div class="param-slider-row">
+              <input
+                type="range"
+                id="param-shape-radius"
+                min="1"
+                max="10"
+                value="5"
+              />
+              <span id="param-shape-radius-value" class="param-slider-value">5</span>
+            </div>
+          </div>
+          <div class="param-group">
+            <label for="param-solution-direction"
+              >Solution direction
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-solution-direction"
+              >
+                ?
+              </button></label
+            >
+            <div
+              id="help-solution-direction"
+              popover="hint"
+              class="param-tooltip"
+            >
+              Clockwise or counter-clockwise along the path.
+            </div>
+            <select id="param-solution-direction">
+              <option value="clockwise">Clockwise</option>
+              <option value="counter">Counter</option>
+            </select>
+          </div>
+          <div class="param-group">
+            <label for="param-solution-style"
+              >Solution style
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-solution-style"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-solution-style" popover="hint" class="param-tooltip">
+              Separate = each char orbits its position. Global = all share one
+              path.
+            </div>
+            <select id="param-solution-style">
+              <option value="separate">Separate animations</option>
+              <option value="global">Global animation</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="param-section">
+          <h3>Noise</h3>
+          <div class="param-group">
+            <label for="param-noise"
+              >Noise count
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-noise"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-noise" popover="hint" class="param-tooltip">
+              Number of decoy characters scattered in the box.
+            </div>
+            <div class="param-slider-row">
+              <input type="range" id="param-noise" min="5" max="30" value="15" />
+              <span id="param-noise-value" class="param-slider-value">15</span>
+            </div>
+          </div>
+          <div class="param-group">
+            <label for="param-noise-speed"
+              >Noise speed
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-noise-speed"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-noise-speed" popover="hint" class="param-tooltip">
+              Animation cycle duration for decoy characters.
+            </div>
+            <div class="param-slider-row">
+              <input
+                type="range"
+                id="param-noise-speed"
+                min="1"
+                max="10"
+                value="5"
+              />
+              <span id="param-noise-speed-value" class="param-slider-value">5</span>
+            </div>
+          </div>
+          <div class="param-group">
+            <label for="param-noise-movement"
+              >Noise movement
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-noise-movement"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-noise-movement" popover="hint" class="param-tooltip">
+              Path decoys follow: random jitter, square, circle, triangle, z, 8,
+              ∞, vibrate, matrix fall, or teleportation.
+            </div>
+            <select id="param-noise-movement">
+              <option value="random">Random</option>
+              <option value="square">Square</option>
+              <option value="circle">Circle</option>
+              <option value="triangle">Triangle</option>
+              <option value="z">Z</option>
+              <option value="8">8</option>
+              <option value="infinity">∞</option>
+              <option value="vibrate" selected>Vibrate</option>
+              <option value="matrix">Matrix</option>
+              <option value="teleportation">Teleportation</option>
+            </select>
+          </div>
+          <div class="param-group">
+            <label for="param-noise-direction"
+              >Noise direction
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-noise-direction"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-noise-direction" popover="hint" class="param-tooltip">
+              Clockwise or counter-clockwise for decoys.
+            </div>
+            <select id="param-noise-direction">
+              <option value="clockwise">Clockwise</option>
+              <option value="counter">Counter</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="param-section">
+          <h3>Appearance</h3>
+          <div class="param-group">
+            <label for="param-color-speed"
+              >Color variation speed
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-color-speed"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-color-speed" popover="hint" class="param-tooltip">
+              How quickly colors cycle (0 = no variation).
+            </div>
+            <div class="param-slider-row">
+              <input
+                type="range"
+                id="param-color-speed"
+                min="0"
+                max="10"
+                value="0"
+              />
+              <span id="param-color-speed-value" class="param-slider-value">0</span>
+            </div>
+          </div>
+          <div class="param-group">
+            <label for="param-color-vividness"
+              >Colors vividness
+              <button
+                type="button"
+                class="param-help"
+                data-popover="help-color-vividness"
+              >
+                ?
+              </button></label
+            >
+            <div id="help-color-vividness" popover="hint" class="param-tooltip">
+              Intensity of character colors. Low = muted/grayscale, high =
+              vibrant.
+            </div>
+            <div class="param-slider-row">
+              <input
+                type="range"
+                id="param-color-vividness"
+                min="1"
+                max="10"
+                value="5"
+              />
+              <span id="param-color-vividness-value" class="param-slider-value">5</span>
+            </div>
+          </div>
+        </section>
+      </aside>
+      <div class="captcha-area">
+        <div id="captcha-container" class="captcha-box"></div>
+        <p class="captcha-hint">
+          Identify the characters that move along the shape and enter them in any
+          order. The solution follows a geometric path; the noise moves
+          differently.
+        </p>
+        <div id="captcha-form" class="captcha-form">
+          <div class="otp-wrapper">
+            <div
+              id="captcha-inputs"
+              class="otp-inputs"
+              role="group"
+              aria-label="Enter the solution characters"
+            ></div>
+            <span
+              id="validation-status"
+              class="validation-status"
+              aria-hidden="true"
+            ></span>
+          </div>
+        </div>
+        <button type="button" id="reset-btn">Reset</button>
+      </div>
+    </main>
+
+    <script src="main.js"></script>
+  </body>
+</html>
